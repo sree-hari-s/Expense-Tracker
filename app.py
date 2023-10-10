@@ -40,11 +40,19 @@ expenses = st.sidebar.number_input("Expenses", value=0)
 if st.sidebar.button("Deduct Expenses"):
     remaining_balance = expense_tracker.deduct_expenses(expenses)
     st.sidebar.success(f"Expenses deducted successfully! Remaining Balance: {remaining_balance}")
-    
+
 # Display family members
 st.header("Family Members")
+
+name_column, earning_status_column, earnings_column = st.columns(3)
+name_column.write("**Name**")
+earning_status_column.write("**Earning status**")
+earnings_column.write("**Earnings**")
+
 for member in expense_tracker.members:
-    st.write(f"Name: {member.name}, Earning Status: {'Earning' if member.earning_status else 'Not Earning'}, Earnings: {member.earnings}")
+    name_column.write(member.name)
+    earning_status_column.write('Earning' if member.earning_status else 'Not Earning')
+    earnings_column.write(member.earnings)
 
 # Display total earnings
 total_earnings = expense_tracker.calculate_total_earnings()
