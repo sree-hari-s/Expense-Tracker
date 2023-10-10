@@ -30,8 +30,16 @@ else:
 expense_tracker = session_state.expense_tracker
 
 if st.sidebar.button("Add Member"):
-    expense_tracker.add_family_member(member_name, earning_status, earnings)
-    st.sidebar.success("Member added successfully!")
+    # Check if family member exists
+    member = [member for member in expense_tracker.members if member.name == member_name]
+    # If not exist add family member
+    if not member:
+        expense_tracker.add_family_member(member_name, earning_status, earnings)
+        st.sidebar.success("Member added successfully!")
+    # Else, update it
+    else:
+        expense_tracker.update_family_member(member[0], earning_status, earnings)
+        st.sidebar.success("Member updated successfully!")
     
 # Sidebar for managing expenses
 st.sidebar.header("Manage Expenses")
@@ -44,7 +52,8 @@ if st.sidebar.button("Deduct Expenses"):
 # Display family members
 st.header("Family Members")
 for member in expense_tracker.members:
-    st.write(f"Name: {member.name}, Earning Status: {'Earning' if member.earning_status else 'Not Earning'}, Earnings: {member.earnings}")
+    st.write(f"Name: {member.name}, Earning Status: {'Earning' if member.earning_status else 'Not Earning'}, "
+             f"Earnings: {member.earnings}")
 
 # Display total earnings
 total_earnings = expense_tracker.calculate_total_earnings()
