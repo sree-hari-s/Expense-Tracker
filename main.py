@@ -1,5 +1,3 @@
-# main.py
-
 class FamilyMember:
     def __init__(self, name, earning_status=True, earnings=0):
         self.name = name
