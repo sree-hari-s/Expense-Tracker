@@ -12,6 +12,9 @@ class FamilyExpenseTracker:
         self.members = []
 
     def add_family_member(self, name, earning_status=True, earnings=0):
+        if not name.strip():
+            raise ValueError("Name field cannot be empty")
+
         member = FamilyMember(name, earning_status, earnings)
         self.members.append(member)
 
