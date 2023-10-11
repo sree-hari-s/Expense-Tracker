@@ -7,7 +7,7 @@
 <div align="center">
 
 ![https://github.com/sree-hari-s/Expense-Tracker/network/members](https://img.shields.io/github/forks/sree-hari-s/Expense-Tracker?color=green) &nbsp;
-![https://github.com/sree-hari-s/Expense-Tracker/graphs/issues](https://img.shields.io/github/issues/sree-hari-s/Expense-Tracker)  &nbsp;
+![https://github.com/sree-hari-s/Expense-Tracker/graphs/issues](https://img.shields.io/github/issues/sree-hari-s/Expense-Tracker) &nbsp;
 ![https://github.com/sree-hari-s/Expense-Tracker/graphs/contributors](https://img.shields.io/github/contributors/sree-hari-s/Expense-Tracker) &nbsp;
 ![https://github.com/sree-hari-s/Expense-Tracker/stargazers](https://img.shields.io/github/stars/sree-hari-s/Expense-Tracker?color=red) &nbsp;
 ![https://github.com/sree-hari-s/Expense-Tracker/watchers](https://img.shields.io/github/watchers/sree-hari-s/Expense-Tracker?color=yellow) &nbsp;
@@ -20,6 +20,11 @@ This is a simple Python project that helps you track family members' earnings an
 ## 👨‍💻 How to Contribute
 
 - If you wish to [contribute](CONTRIBUTING.md) in any way, feel free to get involved. You can suggest improvements or provide support and encouragement by [opening an issue](https://github.com/sree-hari-s/Expense-Tracker/issues).
+
+## How to get started with the project
+
+- Run the command `pip install -r requirements.txt` on terminal to download all dependencies.
+- Run the app.py file
 
 ## License
 
