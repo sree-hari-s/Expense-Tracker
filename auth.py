@@ -46,14 +46,14 @@ def is_valid_login(username, password):
 st.title("Registration and Login App")
 
 # Sidebar to select between Registration and Login
-menu = st.sidebar.selectbox("Menu:", ["Login", "Register"])
+menu = st.selectbox("Menu:", ["Login", "Register"])
 
 if menu == "Login":
     st.header("Login")
 
     # User input for login
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+    username = st.text_input("Username",key="username")
+    password = st.text_input("Password", type="password",key="password")
 
     # Login button
     if st.button("Login"):
@@ -64,11 +64,10 @@ if menu == "Login":
 
 else:
     st.header("Register")
-
     # User input for registration
-    new_username = st.text_input("New Username")
-    new_password = st.text_input("New Password", type="password")
-    confirm_password = st.text_input("Confirm Password", type="password")
+    new_username = st.text_input("Username",key="new_username")
+    new_password = st.text_input("Password", type="password",key="new_password")
+    confirm_password = st.text_input("Confirm Password", type="password",key="confirm_password")
 
     if new_password == confirm_password:
         # Register button
