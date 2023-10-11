@@ -22,38 +22,48 @@ if 'expense_tracker' not in session_state:
 st.sidebar.header("Add Family Member")
 member_name = st.sidebar.text_input("Name").title()
 earning_status = st.sidebar.checkbox("Earning Status")
-if earning_status :
-    earnings = st.sidebar.number_input("Earnings", value=0)
+if earning_status:
+    earnings = st.sidebar.number_input("Earnings", value=0, min_value=0)
 else:
     earnings = 0
 # Access the 'expense_tracker' object from session state
 expense_tracker = session_state.expense_tracker
 
 if st.sidebar.button("Add Member"):
-    # Check if family member exists
-    member = [member for member in expense_tracker.members if member.name == member_name]
-    # If not exist add family member
-    if not member:
-        expense_tracker.add_family_member(member_name, earning_status, earnings)
-        st.sidebar.success("Member added successfully!")
-    # Else, update it
-    else:
-        expense_tracker.update_family_member(member[0], earning_status, earnings)
-        st.sidebar.success("Member updated successfully!")
-    
+  try: 
+      # Check if family member exists
+      member = [member for member in expense_tracker.members if member.name == member_name]
+      # If not exist add family member
+      if not member:
+          expense_tracker.add_family_member(member_name, earning_status, earnings)
+          st.sidebar.success("Member added successfully!")
+      # Else, update it
+      else:
+          expense_tracker.update_family_member(member[0], earning_status, earnings)
+          st.sidebar.success("Member updated successfully!")
+    except ValueError as e:
+        st.sidebar.error(str(e))
+
 # Sidebar for managing expenses
 st.sidebar.header("Manage Expenses")
-expenses = st.sidebar.number_input("Expenses", value=0)
+expenses = st.sidebar.number_input("Expenses", value=0, min_value=0)
 
 if st.sidebar.button("Deduct Expenses"):
     remaining_balance = expense_tracker.deduct_expenses(expenses)
     st.sidebar.success(f"Expenses deducted successfully! Remaining Balance: {remaining_balance}")
-    
+
 # Display family members
 st.header("Family Members")
+
+name_column, earning_status_column, earnings_column = st.columns(3)
+name_column.write("**Name**")
+earning_status_column.write("**Earning status**")
+earnings_column.write("**Earnings**")
+
 for member in expense_tracker.members:
-    st.write(f"Name: {member.name}, Earning Status: {'Earning' if member.earning_status else 'Not Earning'}, "
-             f"Earnings: {member.earnings}")
+    name_column.write(member.name)
+    earning_status_column.write('Earning' if member.earning_status else 'Not Earning')
+    earnings_column.write(member.earnings)
 
 # Display total earnings
 total_earnings = expense_tracker.calculate_total_earnings()
