@@ -20,7 +20,7 @@ if 'expense_tracker' not in session_state:
 
 # Sidebar for adding family members
 st.sidebar.header("Add Family Member")
-member_name = st.sidebar.text_input("Name")
+member_name = st.sidebar.text_input("Name").title()
 earning_status = st.sidebar.checkbox("Earning Status")
 if earning_status:
     earnings = st.sidebar.number_input("Earnings", value=0, min_value=0)
@@ -30,12 +30,20 @@ else:
 expense_tracker = session_state.expense_tracker
 
 if st.sidebar.button("Add Member"):
-    try:   
-        expense_tracker.add_family_member(member_name, earning_status, earnings)
-        st.sidebar.success("Member added successfully!")
+    try: 
+      # Check if family member exists
+      member = [member for member in expense_tracker.members if member.name == member_name]
+      # If not exist add family member
+      if not member:
+          expense_tracker.add_family_member(member_name, earning_status, earnings)
+          st.sidebar.success("Member added successfully!")
+      # Else, update it
+      else:
+          expense_tracker.update_family_member(member[0], earning_status, earnings)
+          st.sidebar.success("Member updated successfully!")
     except ValueError as e:
         st.sidebar.error(str(e))
-        
+
 # Sidebar for managing expenses
 st.sidebar.header("Manage Expenses")
 expenses = st.sidebar.number_input("Expenses", value=0, min_value=0)
