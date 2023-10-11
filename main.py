@@ -23,7 +23,7 @@ class FamilyExpenseTracker:
     def update_family_member(self, member, earning_status=True, earnings=0):
         if member:
             member.earning_status = earning_status
-            member.earnings += earnings
+            member.earnings = earnings
 
     def calculate_total_earnings(self):
         total_earnings = sum(member.earnings for member in self.members if member.earning_status)
