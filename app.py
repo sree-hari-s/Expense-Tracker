@@ -20,7 +20,7 @@ if 'expense_tracker' not in session_state:
 
 # Sidebar for adding family members
 st.sidebar.header("Add Family Member")
-member_name = st.sidebar.text_input("Name")
+member_name = st.sidebar.text_input("Name").title()
 earning_status = st.sidebar.checkbox("Earning Status")
 if earning_status :
     earnings = st.sidebar.number_input("Earnings", value=0)
