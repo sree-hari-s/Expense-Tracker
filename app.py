@@ -30,7 +30,7 @@ else:
 expense_tracker = session_state.expense_tracker
 
 if st.sidebar.button("Add Member"):
-  try: 
+    try: 
       # Check if family member exists
       member = [member for member in expense_tracker.members if member.name == member_name]
       # If not exist add family member
