@@ -5,9 +5,12 @@ class FamilyMember:
         self.earnings = earnings
 
     def __str__(self):
-        return f"Name: {self.name}, Earning Status: {'Earning' if self.earning_status else 'Not Earning'}, " \
-               f"Earnings: {self.earnings}"
-    
+        return (
+            f"Name: {self.name}, Earning Status: {'Earning' if self.earning_status else 'Not Earning'}, "
+            f"Earnings: {self.earnings}"
+        )
+
+
 class Expense:
     def __init__(self, value, category, description):
         self.value = value
@@ -36,15 +39,17 @@ class FamilyExpenseTracker:
             member.earnings = earnings
 
     def calculate_total_earnings(self):
-        total_earnings = sum(member.earnings for member in self.members if member.earning_status)
+        total_earnings = sum(
+            member.earnings for member in self.members if member.earning_status
+        )
         return total_earnings
-    
+
     def add_expense(self, value, category, description):
         if value == 0:
             raise ValueError("Value cannot be zero")
         if not category.strip():
             raise ValueError("Please choose a category")
-        
+
         expense = Expense(value, category, description)
         self.expense_list.append(expense)
 
@@ -61,4 +66,3 @@ class FamilyExpenseTracker:
 
 if __name__ == "__main__":
     expense_tracker = FamilyExpenseTracker()
-

@@ -2,11 +2,7 @@ import streamlit as st
 from main import FamilyExpenseTracker
 
 # Streamlit configuration
-st.set_page_config(
-    page_title="Family Expense Tracker",
-    page_icon="💰",
-    layout="wide"
-)
+st.set_page_config(page_title="Family Expense Tracker", page_icon="💰", layout="wide")
 
 st.title("Family Expense Tracker")
 
@@ -14,7 +10,7 @@ st.title("Family Expense Tracker")
 session_state = st.session_state
 
 # Check if the 'expense_tracker' object exists in the session state
-if 'expense_tracker' not in session_state:
+if "expense_tracker" not in session_state:
     # If not, create and initialize it
     session_state.expense_tracker = FamilyExpenseTracker()
 
@@ -31,30 +27,46 @@ else:
 expense_tracker = session_state.expense_tracker
 
 if st.sidebar.button("Add Member"):
-    try: 
-      # Check if family member exists
-      member = [member for member in expense_tracker.members if member.name == member_name]
-      # If not exist add family member
-      if not member:
-          expense_tracker.add_family_member(member_name, earning_status, earnings)
-          st.sidebar.success("Member added successfully!")
-      # Else, update it
-      else:
-          expense_tracker.update_family_member(member[0], earning_status, earnings)
-          st.sidebar.success("Member updated successfully!")
+    try:
+        # Check if family member exists
+        member = [
+            member for member in expense_tracker.members if member.name == member_name
+        ]
+        # If not exist add family member
+        if not member:
+            expense_tracker.add_family_member(member_name, earning_status, earnings)
+            st.sidebar.success("Member added successfully!")
+        # Else, update it
+        else:
+            expense_tracker.update_family_member(member[0], earning_status, earnings)
+            st.sidebar.success("Member updated successfully!")
     except ValueError as e:
         st.sidebar.error(str(e))
 
 # Sidebar for adding expenses
 st.sidebar.header("Add Expenses")
-expense_category = st.sidebar.selectbox("Category",("Housing", "Food", "Transportation", "Entertainment", "Child-Related", "Medical", "Investment", "Miscellaneous"))
+expense_category = st.sidebar.selectbox(
+    "Category",
+    (
+        "Housing",
+        "Food",
+        "Transportation",
+        "Entertainment",
+        "Child-Related",
+        "Medical",
+        "Investment",
+        "Miscellaneous",
+    ),
+)
 expense_description = st.sidebar.text_input("Descritpion (optional)").title()
 expense_value = st.sidebar.number_input("Value", min_value=0)
 
 if st.sidebar.button("Add Expense"):
     try:
         # Add the expense
-        expense_tracker.add_expense(expense_value,expense_category,expense_description)
+        expense_tracker.add_expense(
+            expense_value, expense_category, expense_description
+        )
         st.sidebar.success("Expense addedd successfully!")
     except ValueError as e:
         st.sidebar.error(str(e))
@@ -69,7 +81,7 @@ earnings_column.write("**Earnings**")
 
 for member in expense_tracker.members:
     name_column.write(member.name)
-    earning_status_column.write('Earning' if member.earning_status else 'Not Earning')
+    earning_status_column.write("Earning" if member.earning_status else "Not Earning")
     earnings_column.write(member.earnings)
 
 # Display total earnings

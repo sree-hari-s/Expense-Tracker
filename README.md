@@ -12,7 +12,7 @@
 ![https://github.com/sree-hari-s/Expense-Tracker/stargazers](https://img.shields.io/github/stars/sree-hari-s/Expense-Tracker?color=red) &nbsp;
 ![https://github.com/sree-hari-s/Expense-Tracker/watchers](https://img.shields.io/github/watchers/sree-hari-s/Expense-Tracker?color=yellow) &nbsp;
 ![https://github.com/sree-hari-s/Expense-Tracker/license](https://img.shields.io/github/license/sree-hari-s/Expense-Tracker) &nbsp;
-
+[![code style: black](https://img.shields.io/badge/code%20style-black-000.svg)](https://github.com/psf/black) &nbsp;
 </div>
 
 <div align="center">
