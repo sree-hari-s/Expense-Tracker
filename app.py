@@ -47,9 +47,9 @@ if st.sidebar.button("Add Member"):
 
 # Sidebar for adding expenses
 st.sidebar.header("Add Expenses")
-expense_value = st.sidebar.number_input("Value", min_value=0)
 expense_category = st.sidebar.selectbox("Category",("Housing", "Food", "Transportation", "Entertainment", "Child-Related", "Medical", "Investment", "Miscellaneous"))
 expense_description = st.sidebar.text_input("Descritpion (optional)").title()
+expense_value = st.sidebar.number_input("Value", min_value=0)
 
 if st.sidebar.button("Add Expense"):
     try:
