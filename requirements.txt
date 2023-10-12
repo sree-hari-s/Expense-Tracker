@@ -20,7 +20,6 @@ numpy==1.26.0
 packaging==23.2
 pandas==2.1.1
 Pillow==10.0.1
-plotly==5.17.0
 protobuf==4.24.4
 pyarrow==13.0.0
 pydeck==0.8.1b0
@@ -30,7 +29,7 @@ pytz==2023.3.post1
 referencing==0.30.2
 requests==2.31.0
 rich==13.6.0
-rpds-py==0.10.4
+rpds-py==0.10.6
 six==1.16.0
 smmap==5.0.1
 streamlit==1.27.2
