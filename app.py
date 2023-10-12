@@ -26,6 +26,7 @@ if earning_status:
     earnings = st.sidebar.number_input("Earnings", value=0, min_value=0)
 else:
     earnings = 0
+
 # Access the 'expense_tracker' object from session state
 expense_tracker = session_state.expense_tracker
 
@@ -44,13 +45,19 @@ if st.sidebar.button("Add Member"):
     except ValueError as e:
         st.sidebar.error(str(e))
 
-# Sidebar for managing expenses
-st.sidebar.header("Manage Expenses")
-expenses = st.sidebar.number_input("Expenses", value=0, min_value=0)
+# Sidebar for adding expenses
+st.sidebar.header("Add Expenses")
+expense_category = st.sidebar.selectbox("Category",("Housing", "Food", "Transportation", "Entertainment", "Child-Related", "Medical", "Investment", "Miscellaneous"))
+expense_description = st.sidebar.text_input("Descritpion (optional)").title()
+expense_value = st.sidebar.number_input("Value", min_value=0)
 
-if st.sidebar.button("Deduct Expenses"):
-    remaining_balance = expense_tracker.deduct_expenses(expenses)
-    st.sidebar.success(f"Expenses deducted successfully! Remaining Balance: {remaining_balance}")
+if st.sidebar.button("Add Expense"):
+    try:
+        # Add the expense
+        expense_tracker.add_expense(expense_value,expense_category,expense_description)
+        st.sidebar.success("Expense addedd successfully!")
+    except ValueError as e:
+        st.sidebar.error(str(e))
 
 # Display family members
 st.header("Family Members")
@@ -70,7 +77,25 @@ total_earnings = expense_tracker.calculate_total_earnings()
 st.header("Total Earnings")
 st.write(f"Total Earnings: {total_earnings}")
 
+# Display expenses
+st.header("Expenses")
+
+value_column, category_column, description_column = st.columns(3)
+value_column.write("**Value**")
+category_column.write("**Category**")
+description_column.write("**Description**")
+
+for expense in expense_tracker.expense_list:
+    value_column.write(expense.value)
+    category_column.write(expense.category)
+    description_column.write(expense.description)
+
+# Display total expenditure
+total_expenditure = expense_tracker.calculate_total_expenditure()
+st.header("Total Expenditure")
+st.write(f"Total Expenditure: {total_expenditure}")
+
 # Display remaining balance
-remaining_balance = total_earnings - expenses
+remaining_balance = total_earnings - total_expenditure
 st.header("Remaining Balance")
 st.write(f"Remaining Balance: {remaining_balance}")
