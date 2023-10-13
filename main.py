@@ -19,6 +19,9 @@ class FamilyExpenseTracker:
 
         member = FamilyMember(name, earning_status, earnings)
         self.members.append(member)
+    
+    def delete_family_member(self, member):
+        self.members.remove(member)
 
     def update_family_member(self, member, earning_status=True, earnings=0):
         if member:
