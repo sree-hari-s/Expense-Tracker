@@ -60,7 +60,7 @@ if st.sidebar.button("Add Expense"):
         expense_tracker.add_expense(
             expense_value, expense_category, expense_description
         )
-        st.sidebar.success("Expense addedd successfully!")
+        st.sidebar.success("Expense added successfully!")
     except ValueError as e:
         st.sidebar.error(str(e))
 
