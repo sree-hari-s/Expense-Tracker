@@ -58,7 +58,7 @@ expense_category = st.sidebar.selectbox(
         "Miscellaneous",
     ),
 )
-expense_description = st.sidebar.text_input("Descritpion (optional)").title()
+expense_description = st.sidebar.text_input("Description (optional)").title()
 expense_value = st.sidebar.number_input("Value", min_value=0)
 
 if st.sidebar.button("Add Expense"):
@@ -67,7 +67,7 @@ if st.sidebar.button("Add Expense"):
         expense_tracker.add_expense(
             expense_value, expense_category, expense_description
         )
-        st.sidebar.success("Expense addedd successfully!")
+        st.sidebar.success("Expense added successfully!")
     except ValueError as e:
         st.sidebar.error(str(e))
 
