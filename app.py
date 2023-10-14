@@ -58,7 +58,7 @@ expense_category = st.sidebar.selectbox(
         "Miscellaneous",
     ),
 )
-expense_description = st.sidebar.text_input("Descritpion (optional)").title()
+expense_description = st.sidebar.text_input("Description (optional)").title()
 expense_value = st.sidebar.number_input("Value", min_value=0)
 
 if st.sidebar.button("Add Expense"):
@@ -67,27 +67,30 @@ if st.sidebar.button("Add Expense"):
         expense_tracker.add_expense(
             expense_value, expense_category, expense_description
         )
-        st.sidebar.success("Expense addedd successfully!")
+        st.sidebar.success("Expense added successfully!")
     except ValueError as e:
         st.sidebar.error(str(e))
 
 # Display family members
 st.header("Family Members")
 
-name_column, earning_status_column, earnings_column, action_column = st.columns(4)
-name_column.write("**Name**")
-earning_status_column.write("**Earning status**")
-earnings_column.write("**Earnings**")
-action_column.write("**Action**")
+if not expense_tracker.members:
+    st.info("Start by adding family members to track your expenses together! Currently, no members have been added. Get started by clicking the 'Add Member' button on the sidebar.")
+else:
+    name_column, earning_status_column, earnings_column, action_column = st.columns(4)
+    name_column.write("**Name**")
+    earning_status_column.write("**Earning status**")
+    earnings_column.write("**Earnings**")
+    action_column.write("**Action**")
 
-for member in expense_tracker.members:
-    name_column.write(member.name)
-    earning_status_column.write("Earning" if member.earning_status else "Not Earning")
-    earnings_column.write(member.earnings)
+    for member in expense_tracker.members:
+        name_column.write(member.name)
+        earning_status_column.write("Earning" if member.earning_status else "Not Earning")
+        earnings_column.write(member.earnings)
 
-    if action_column.button(f"Delete {member.name}"):
-        expense_tracker.delete_family_member(member)
-        st.rerun()
+        if action_column.button(f"Delete {member.name}"):
+            expense_tracker.delete_family_member(member)
+            st.rerun()
 
 # Display total earnings
 total_earnings = expense_tracker.calculate_total_earnings()
