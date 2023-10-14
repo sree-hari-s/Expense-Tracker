@@ -1,8 +1,15 @@
 import streamlit as st
 from main import FamilyExpenseTracker
+import matplotlib.pyplot as plt
 
 # Streamlit configuration
-st.set_page_config(page_title="Family Expense Tracker", page_icon="💰", layout="wide")
+st.set_page_config(page_title="Family Expense Tracker", page_icon="💰", layout="wide")  
+
+#Load CSS
+with open("styles.css") as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+
 
 st.title("Family Expense Tracker")
 
@@ -119,3 +126,33 @@ st.write(f"Total Expenditure: {total_expenditure}")
 remaining_balance = total_earnings - total_expenditure
 st.header("Remaining Balance")
 st.write(f"Remaining Balance: {remaining_balance}")
+
+# Display total expenditure
+total_expenditure = expense_tracker.calculate_total_expenditure()
+st.header("Total Expenditure")
+st.write(f"Total Expenditure: {total_expenditure}")
+
+# Calculate the remaining balance
+remaining_balance = total_earnings - total_expenditure
+st.header("Remaining Balance")
+st.write(f"Remaining Balance: {remaining_balance}")
+
+# Create a list of expenses and their values
+expense_data = [(expense.category, expense.value) for expense in expense_tracker.expense_list]
+
+# Calculate the percentage of expenses for the pie chart
+expenses = [data[0] for data in expense_data]
+values = [data[1] for data in expense_data]
+total = sum(values)
+percentages = [(value / total) * 100 for value in values]
+
+# Create a smaller pie chart with a transparent background
+fig, ax = plt.subplots(figsize=(3,3), dpi=300)
+ax.pie(percentages, labels=expenses, autopct="%1.1f%%", startangle=140, textprops={'fontsize': 6, 'color': 'white'})
+ax.set_title("Expense Distribution", fontsize=12, color='white')
+
+# Set the background color to be transparent
+fig.patch.set_facecolor('none')
+
+# Display the pie chart in Streamlit
+st.pyplot(fig)
