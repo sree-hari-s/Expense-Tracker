@@ -1,12 +1,15 @@
+import sqlite3
+
 class FamilyMember:
-    def __init__(self, name, earning_status=True, earnings=0):
+    def __init__(self, id, name, earning_status=True, earnings=0):
+        self.id = id
         self.name = name
         self.earning_status = earning_status
         self.earnings = earnings
 
     def __str__(self):
         return (
-            f"Name: {self.name}, Earning Status: {'Earning' if self.earning_status else 'Not Earning'}, "
+            f"ID: {self.id}, Name: {self.name}, Earning Status: {'Earning' if self.earning_status else 'Not Earning'}, "
             f"Earnings: {self.earnings}"
         )
 
@@ -65,6 +68,33 @@ class FamilyExpenseTracker:
         total_expenditure = self.calculate_total_expenditure()
         remaining_balance = total_earnings - total_expenditure
         return remaining_balance
+
+class Repository:
+    def __init__(self, db_file):
+        conn = None
+        try:
+            conn = sqlite3.connect(db_file)
+            self.conn = conn
+        except:
+            print('Error: cannot connect to Database.')
+
+    def get_family_members(self):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT * FROM family_members;")
+        rows = cursor.fetchall()
+        family_members = []
+        for row in rows:
+            family_members.append(FamilyMember(id=row[0], name=row[1], earning_status=bool(row[2]), earnings=row[3]))
+        return family_members
+
+    def add_family_member(self, name, earning_status, earnings):
+        conn = self.conn
+        cursor = conn.cursor()
+        earnings = earnings if earning_status else 0
+        earning_status = 1 if earning_status else 0
+        cursor.execute(f"INSERT INTO family_members(name, earning_status, earnings) VALUES (?, ?, ?)", (name, earning_status, earnings))
+        conn.commit()
+        return cursor.lastrowid
 
 
 if __name__ == "__main__":

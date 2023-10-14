@@ -23,7 +23,8 @@ def create_tables(conn):
                  CREATE TABLE IF NOT EXISTS family_members(
                    id integer PRIMARY KEY,
                    name text NOT NULL,
-                   earning_status BOOLEAN NOT NULL CHECK (earning_status IN (0, 1))
+                   earning_status BOOLEAN NOT NULL CHECK (earning_status IN (0, 1)),
+                   earnings integer NOT NULL DEFAULT 0
                  );
                  """)
 
