@@ -74,15 +74,20 @@ if st.sidebar.button("Add Expense"):
 # Display family members
 st.header("Family Members")
 
-name_column, earning_status_column, earnings_column = st.columns(3)
+name_column, earning_status_column, earnings_column, action_column = st.columns(4)
 name_column.write("**Name**")
 earning_status_column.write("**Earning status**")
 earnings_column.write("**Earnings**")
+action_column.write("**Action**")
 
 for member in expense_tracker.members:
     name_column.write(member.name)
     earning_status_column.write("Earning" if member.earning_status else "Not Earning")
     earnings_column.write(member.earnings)
+
+    if action_column.button(f"Delete {member.name}"):
+        expense_tracker.delete_family_member(member)
+        st.rerun()
 
 # Display total earnings
 total_earnings = expense_tracker.calculate_total_earnings()
