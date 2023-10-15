@@ -56,16 +56,28 @@ class FamilyExpenseTracker:
         expense = Expense(value, category, description)
         self.expense_list.append(expense)
 
+    def merge_similar_category(self, value, category, description):
+        if value == 0:
+            raise ValueError("Value cannot be zero")
+        if not category.strip():
+            raise ValueError("Please choose a category")
+
+        existing_expense = None
+        for expense in self.expense_list:
+            if expense.category == category:
+                existing_expense = expense
+                break
+
+        if existing_expense:
+            existing_expense.value += value
+            if description:
+                existing_expense.description = description
+        else:
+            self.add_expense(value, category, description)
+    
     def calculate_total_expenditure(self):
         total_expenditure = sum(expense.value for expense in self.expense_list)
         return total_expenditure
-
-    def deduct_expenses(self, expenses):
-        total_earnings = self.calculate_total_earnings()
-        total_expenditure = self.calculate_total_expenditure()
-        remaining_balance = total_earnings - total_expenditure
-        return remaining_balance
-
 
 if __name__ == "__main__":
     expense_tracker = FamilyExpenseTracker()
