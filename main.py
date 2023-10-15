@@ -66,6 +66,25 @@ class FamilyExpenseTracker:
 
         self.repo.add_expense(value, category, description)
 
+    def merge_similar_category(self, value, category, description):
+        if value == 0:
+            raise ValueError("Value cannot be zero")
+        if not category.strip():
+            raise ValueError("Please choose a category")
+
+        existing_expense = None
+        for expense in self.expense_list:
+            if expense.category == category:
+                existing_expense = expense
+                break
+
+        if existing_expense:
+            existing_expense.value += value
+            if description:
+                existing_expense.description = description
+        else:
+            self.add_expense(value, category, description)
+    
     def calculate_total_expenditure(self):
         expenses = self.repo.get_expenses()
         total_expenditure = sum(expense.value for expense in expenses)

@@ -19,7 +19,7 @@ st.sidebar.header("Add Family Member")
 member_name = st.sidebar.text_input("Name").title()
 earning_status = st.sidebar.checkbox("Earning Status")
 if earning_status:
-    earnings = st.sidebar.number_input("Earnings", value=0, min_value=0)
+    earnings = st.sidebar.number_input("Earnings", value=1, min_value=1)
 else:
     earnings = 0
 
@@ -57,7 +57,7 @@ expense_value = st.sidebar.number_input("Value", min_value=0)
 if st.sidebar.button("Add Expense"):
     try:
         # Add the expense
-        expense_tracker.add_expense(
+        expense_tracker.merge_similar_category(
             expense_value, expense_category, expense_description
         )
         st.sidebar.success("Expense added successfully!")
