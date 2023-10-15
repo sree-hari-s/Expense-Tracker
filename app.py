@@ -137,20 +137,20 @@ st.write(f"Remaining Balance: {remaining_balance}")
 
 # Create a list of expenses and their values
 expense_data = [(expense.category, expense.value) for expense in expense_tracker.expense_list]
+if expense_data:
+    # Calculate the percentage of expenses for the pie chart
+    expenses = [data[0] for data in expense_data]
+    values = [data[1] for data in expense_data]
+    total = sum(values)
+    percentages = [(value / total) * 100 for value in values]
 
-# Calculate the percentage of expenses for the pie chart
-expenses = [data[0] for data in expense_data]
-values = [data[1] for data in expense_data]
-total = sum(values)
-percentages = [(value / total) * 100 for value in values]
+    # Create a smaller pie chart with a transparent background
+    fig, ax = plt.subplots(figsize=(3,3), dpi=300)
+    ax.pie(percentages, labels=expenses, autopct="%1.1f%%", startangle=140, textprops={'fontsize': 6, 'color': 'white'})
+    ax.set_title("Expense Distribution", fontsize=12, color='white')
 
-# Create a smaller pie chart with a transparent background
-fig, ax = plt.subplots(figsize=(3,3), dpi=300)
-ax.pie(percentages, labels=expenses, autopct="%1.1f%%", startangle=140, textprops={'fontsize': 6, 'color': 'white'})
-ax.set_title("Expense Distribution", fontsize=12, color='white')
+    # Set the background color to be transparent
+    fig.patch.set_facecolor('none')
 
-# Set the background color to be transparent
-fig.patch.set_facecolor('none')
-
-# Display the pie chart in Streamlit
-st.pyplot(fig)
+    # Display the pie chart in Streamlit
+    st.pyplot(fig)
