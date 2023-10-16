@@ -10,6 +10,7 @@ def create_connection(db_file):
         print("Initializing DB...")
         conn = sqlite3.connect(db_file)
         create_tables(conn)
+        seed_db(conn)
         print("Done.")
     except Error as e:
         print(e)
@@ -40,14 +41,18 @@ def create_tables(conn):
                    id integer PRIMARY KEY,
                    category_id integer NOT NULL,
                    description TEXT,
+                   value integer NOT NULL,
                    FOREIGN KEY (category_id) REFERENCES categories (id)
                  );
                  """)
 
-  # Check if table exists
-  table_not_empty = cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='categories';").fetchone() is not None
+  conn.commit()
 
-  if not table_not_empty:
+def seed_db(conn):
+  cursor = conn.cursor()
+  cursor.execute('''SELECT COUNT(*) from categories''')
+  result = cursor.fetchall()
+  if(result[0][0] == 0):
     cursor.execute("""
                   INSERT INTO categories (id, category) VALUES
                   (1, 'Housing'),
@@ -59,8 +64,7 @@ def create_tables(conn):
                   (7, 'Investment'),
                   (8, 'Miscellaneous');
                   """)
-
-  conn.commit()
+    conn.commit()
 
 if __name__ == '__main__':
     create_connection(os.getcwd() + '/db.sqlite')
