@@ -30,7 +30,7 @@ if st.sidebar.button("Add Member"):
     try:
         # Check if family member exists
         member = [
-            member for member in expense_tracker.members if member.name == member_name
+            member for member in expense_tracker.repo.get_family_members() if member.name == member_name
         ]
         # If not exist add family member
         if not member:
@@ -48,17 +48,10 @@ st.sidebar.header("Add Expenses")
 expense_category = st.sidebar.selectbox(
     "Category",
     (
-        "Housing",
-        "Food",
-        "Transportation",
-        "Entertainment",
-        "Child-Related",
-        "Medical",
-        "Investment",
-        "Miscellaneous",
+        category.name for category in expense_tracker.repo.get_categories()
     ),
 )
-expense_description = st.sidebar.text_input("Descritpion (optional)").title()
+expense_description = st.sidebar.text_input("Description (optional)").title()
 expense_value = st.sidebar.number_input("Value", min_value=0)
 
 if st.sidebar.button("Add Expense"):
@@ -80,7 +73,7 @@ earning_status_column.write("**Earning status**")
 earnings_column.write("**Earnings**")
 action_column.write("**Action**")
 
-for member in expense_tracker.members:
+for member in expense_tracker.repo.get_family_members():
     name_column.write(member.name)
     earning_status_column.write("Earning" if member.earning_status else "Not Earning")
     earnings_column.write(member.earnings)
@@ -102,7 +95,7 @@ value_column.write("**Value**")
 category_column.write("**Category**")
 description_column.write("**Description**")
 
-for expense in expense_tracker.expense_list:
+for expense in expense_tracker.repo.get_expenses():
     value_column.write(expense.value)
     category_column.write(expense.category)
     description_column.write(expense.description)
