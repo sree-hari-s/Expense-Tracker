@@ -15,13 +15,14 @@ class FamilyMember:
 
 
 class Expense:
-    def __init__(self, value, category, description):
+    def __init__(self, id, value, category, description):
+        self.id = id
         self.value = value
         self.category = category
         self.description = description
 
     def __str__(self):
-        return f"Value: {self.value}, Category: {self.category}, Description: {self.description}"
+        return f"ID: {self.id}, Value: {self.value}, Category: {self.category}, Description: {self.description}"
 
 
 class FamilyExpenseTracker:
@@ -95,6 +96,30 @@ class Repository:
         cursor.execute(f"INSERT INTO family_members(name, earning_status, earnings) VALUES (?, ?, ?)", (name, earning_status, earnings))
         conn.commit()
         return cursor.lastrowid
+
+    def remove_family_member(self, id):
+        conn = self.conn
+        cursor = conn.cursor()
+        cursor.execute(f"DELETE FROM family_members WHERE id = {id}")
+        conn.commit()
+
+    def add_expense(self, value, category_id, description):
+        conn = self.conn
+        cursor = conn.cursor()
+        cursor.execute(f"INSERT INTO expenses(category_id, description, value) VALUES (?, ?, ?)", (category_id, description, value))
+        conn.commit()
+        return cursor.lastrowid
+
+    def get_expenses(self):
+        conn = self.conn
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * FROM expenses INNER JOIN categories ON expenses.category_id = categories.id")
+        rows = cursor.fetchall()
+        expenses = []
+        for row in rows:
+            expenses.append(Expense(row[0], row[3], row[5], row[2]))
+        return expenses
+
 
 
 if __name__ == "__main__":
