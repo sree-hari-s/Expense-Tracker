@@ -30,6 +30,7 @@ else:
 
 # Access the 'expense_tracker' object from session state
 expense_tracker = session_state.expense_tracker
+members = expense_tracker.repo.get_family_members()
 
 if st.sidebar.button("Add Member"):
     try:
@@ -72,7 +73,7 @@ if st.sidebar.button("Add Expense"):
 # Display family members
 st.header("Family Members")
 
-if not expense_tracker.members:
+if not expense_tracker.repo.get_family_members():
     st.info("Start by adding family members to track your expenses together! Currently, no members have been added. Get started by clicking the 'Add Member' button on the sidebar.")
 else:
     name_column, earning_status_column, earnings_column, action_column = st.columns(4)
@@ -129,7 +130,7 @@ st.header("Remaining Balance")
 st.write(f"Remaining Balance: {remaining_balance}")
 
 # Create a list of expenses and their values
-expense_data = [(expense.category, expense.value) for expense in expense_tracker.expense_list]
+expense_data = [(expense.category, expense.value) for expense in expense_tracker.repo.get_expenses()]
 if expense_data:
     # Calculate the percentage of expenses for the pie chart
     expenses = [data[0] for data in expense_data]

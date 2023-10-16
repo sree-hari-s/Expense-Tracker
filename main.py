@@ -73,7 +73,7 @@ class FamilyExpenseTracker:
             raise ValueError("Please choose a category")
 
         existing_expense = None
-        for expense in self.expense_list:
+        for expense in self.repo.get_expenses():
             if expense.category == category:
                 existing_expense = expense
                 break
