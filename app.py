@@ -133,15 +133,6 @@ remaining_balance = total_earnings - total_expenditure
 st.header("Remaining Balance")
 st.write(f"Remaining Balance: {remaining_balance}")
 
-# Display total expenditure
-total_expenditure = expense_tracker.calculate_total_expenditure()
-st.header("Total Expenditure")
-st.write(f"Total Expenditure: {total_expenditure}")
-
-# Calculate the remaining balance
-remaining_balance = total_earnings - total_expenditure
-st.header("Remaining Balance")
-st.write(f"Remaining Balance: {remaining_balance}")
 
 # Create a list of expenses and their values
 expense_data = [(expense.category, expense.value) for expense in expense_tracker.expense_list]
