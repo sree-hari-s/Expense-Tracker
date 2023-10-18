@@ -65,12 +65,13 @@ expense_category = st.sidebar.selectbox(
 )
 expense_description = st.sidebar.text_input("Description (optional)").title()
 expense_value = st.sidebar.number_input("Value", min_value=0)
+expense_date = st.sidebar.date_input("Date", value="today")
 
 if st.sidebar.button("Add Expense"):
     try:
         # Add the expense
         expense_tracker.merge_similar_category(
-            expense_value, expense_category, expense_description
+            expense_value, expense_category, expense_description, expense_date
         )
         st.sidebar.success("Expense added successfully!")
     except ValueError as e:
@@ -105,16 +106,18 @@ st.write(f"Total Earnings: {total_earnings}")
 # Display expenses
 st.header("Expenses")
 
-value_column, category_column, description_column, expense_delete_column = st.columns(4)
+value_column, category_column, description_column, date_column,expense_delete_column = st.columns(5)
 value_column.write("**Value**")
 category_column.write("**Category**")
 description_column.write("**Description**")
+date_column.write("**Date**")
 expense_delete_column.write("**Delete**")
 
 for expense in expense_tracker.expense_list:
     value_column.write(expense.value)
     category_column.write(expense.category)
     description_column.write(expense.description)
+    date_column.write(expense.date)
 
     if expense_delete_column.button(f"Delete {expense.category}"):
         expense_tracker.delete_expense(expense)

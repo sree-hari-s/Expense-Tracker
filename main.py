@@ -12,13 +12,14 @@ class FamilyMember:
 
 
 class Expense:
-    def __init__(self, value, category, description):
+    def __init__(self, value, category, description, date):
         self.value = value
         self.category = category
         self.description = description
+        self.date = date
 
     def __str__(self):
-        return f"Value: {self.value}, Category: {self.category}, Description: {self.description}"
+        return f"Value: {self.value}, Category: {self.category}, Description: {self.description}, Date: {self.date}"
 
 
 class FamilyExpenseTracker:
@@ -47,19 +48,20 @@ class FamilyExpenseTracker:
         )
         return total_earnings
 
-    def add_expense(self, value, category, description):
+    def add_expense(self, value, category, description, date):
         if value == 0:
             raise ValueError("Value cannot be zero")
         if not category.strip():
             raise ValueError("Please choose a category")
 
-        expense = Expense(value, category, description)
+        expense = Expense(value, category, description, date)
         self.expense_list.append(expense)
 
     def delete_expense(self,expense):
         self.expense_list.remove(expense)
 
-    def merge_similar_category(self, value, category, description):
+
+    def merge_similar_category(self, value, category, description, date):
         if value == 0:
             raise ValueError("Value cannot be zero")
         if not category.strip():
@@ -76,11 +78,12 @@ class FamilyExpenseTracker:
             if description:
                 existing_expense.description = description
         else:
-            self.add_expense(value, category, description)
-    
+            self.add_expense(value, category, description, date)
+
     def calculate_total_expenditure(self):
         total_expenditure = sum(expense.value for expense in self.expense_list)
         return total_expenditure
+
 
 if __name__ == "__main__":
     expense_tracker = FamilyExpenseTracker()
