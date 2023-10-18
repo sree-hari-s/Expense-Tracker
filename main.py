@@ -56,6 +56,9 @@ class FamilyExpenseTracker:
         expense = Expense(value, category, description)
         self.expense_list.append(expense)
 
+    def delete_expense(self,expense):
+        self.expense_list.remove(expense)
+
     def merge_similar_category(self, value, category, description):
         if value == 0:
             raise ValueError("Value cannot be zero")
