@@ -140,43 +140,43 @@ elif selected == "Data Overview":
                 expense_tracker.delete_family_member(member)
                 st.rerun()
 
-        # Display total earnings
-        total_earnings = expense_tracker.calculate_total_earnings()
-        st.header(f"Total Earnings: {total_earnings}")
-
         # Display expenses
         st.header("Expenses")
+        if not expense_tracker.expense_list:
+            st.info(
+            "Currently, no expenses have been added. Get started by clicking the 'Add Expenses' from the Data Entry Tab"
+        )
+        else:
+            (
+                value_column,
+                category_column,
+                description_column,
+                date_column,
+                expense_delete_column,
+            ) = st.columns(5)
+            value_column.write("**Value**")
+            category_column.write("**Category**")
+            description_column.write("**Description**")
+            date_column.write("**Date**")
+            expense_delete_column.write("**Delete**")
 
-        (
-            value_column,
-            category_column,
-            description_column,
-            date_column,
-            expense_delete_column,
-        ) = st.columns(5)
-        value_column.write("**Value**")
-        category_column.write("**Category**")
-        description_column.write("**Description**")
-        date_column.write("**Date**")
-        expense_delete_column.write("**Delete**")
+            for expense in expense_tracker.expense_list:
+                value_column.write(expense.value)
+                category_column.write(expense.category)
+                description_column.write(expense.description)
+                date_column.write(expense.date)
 
-        for expense in expense_tracker.expense_list:
-            value_column.write(expense.value)
-            category_column.write(expense.category)
-            description_column.write(expense.description)
-            date_column.write(expense.date)
+                if expense_delete_column.button(f"Delete {expense.category}"):
+                    expense_tracker.delete_expense(expense)
+                    st.rerun()
 
-            if expense_delete_column.button(f"Delete {expense.category}"):
-                expense_tracker.delete_expense(expense)
-                st.rerun()
-
-        # Display total expenditure
-        total_expenditure = expense_tracker.calculate_total_expenditure()
-        st.header(f"Total Expenditure: {total_expenditure}")
-
-        # Display remaining balance
-        remaining_balance = total_earnings - total_expenditure
-        st.header(f"Remaining Balance: {remaining_balance}")
+        total_earnings = expense_tracker.calculate_total_earnings()               # Calculate total earnings
+        total_expenditure = expense_tracker.calculate_total_expenditure()         # Calculate total expenditure
+        remaining_balance = total_earnings - total_expenditure                    # Calculate remaining balance
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Total Earnings", f"{total_earnings}")          # Display total earnings
+        col2.metric("Total Expenditure", f"{total_expenditure}")    # Display total expenditure 
+        col3.metric("Remaining Balance", f"{remaining_balance}")    # Display remaining balance 
 
 elif selected == "Data Visualization":
     # Create a list of expenses and their values
