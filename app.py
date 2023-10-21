@@ -8,6 +8,16 @@ st.set_page_config(page_title="Family Expense Tracker", page_icon="💰")
 
 st.title("")  # Clear the default title
 
+# Hide Streamlit Style
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 # Create a session state object
 session_state = st.session_state
 
