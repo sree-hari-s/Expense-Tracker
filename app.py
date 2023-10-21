@@ -27,13 +27,20 @@ if "expense_tracker" not in session_state:
     session_state.expense_tracker = FamilyExpenseTracker()
 
 # Center-align the heading using HTML
-st.markdown('<h1 style="text-align: center;">Family Expense Tracker</h1>', unsafe_allow_html=True)
+st.markdown(
+    '<h1 style="text-align: center;">Family Expense Tracker</h1>',
+    unsafe_allow_html=True,
+)
 
 # Navigation Menu
 selected = option_menu(
     menu_title=None,
-    options=["Data Entry","Data Overview" ,"Data Visualization"],
-    icons=["pencil-fill", "bar-chart-fill"],  # https://icons.getbootstrap.com/
+    options=["Data Entry", "Data Overview", "Data Visualization"],
+    icons=[
+        "pencil-fill",
+        "clipboard2-data",
+        "bar-chart-fill",
+    ],  # https://icons.getbootstrap.com/
     orientation="horizontal",
 )
 
@@ -55,15 +62,21 @@ if selected == "Data Entry":
             try:
                 # Check if family member exists
                 member = [
-                    member for member in expense_tracker.members if member.name == member_name
+                    member
+                    for member in expense_tracker.members
+                    if member.name == member_name
                 ]
                 # If not exist add family member
                 if not member:
-                    expense_tracker.add_family_member(member_name, earning_status, earnings)
+                    expense_tracker.add_family_member(
+                        member_name, earning_status, earnings
+                    )
                     st.success("Member added successfully!")
                 # Else, update it
                 else:
-                    expense_tracker.update_family_member(member[0], earning_status, earnings)
+                    expense_tracker.update_family_member(
+                        member[0], earning_status, earnings
+                    )
                     st.success("Member updated successfully!")
             except ValueError as e:
                 st.error(str(e))
@@ -100,10 +113,17 @@ if selected == "Data Entry":
 elif selected == "Data Overview":
     # Display family members
     if not expense_tracker.members:
-        st.info("Start by adding family members to track your expenses together! Currently, no members have been added. Get started by clicking the 'Add Member' from the Data Entry Tab")
+        st.info(
+            "Start by adding family members to track your expenses together! Currently, no members have been added. Get started by clicking the 'Add Member' from the Data Entry Tab"
+        )
     else:
         st.header("Family Members")
-        name_column, earning_status_column, earnings_column, family_delete_column = st.columns(4)
+        (
+            name_column,
+            earning_status_column,
+            earnings_column,
+            family_delete_column,
+        ) = st.columns(4)
         name_column.write("**Name**")
         earning_status_column.write("**Earning status**")
         earnings_column.write("**Earnings**")
@@ -111,7 +131,9 @@ elif selected == "Data Overview":
 
         for member in expense_tracker.members:
             name_column.write(member.name)
-            earning_status_column.write("Earning" if member.earning_status else "Not Earning")
+            earning_status_column.write(
+                "Earning" if member.earning_status else "Not Earning"
+            )
             earnings_column.write(member.earnings)
 
             if family_delete_column.button(f"Delete {member.name}"):
@@ -125,7 +147,13 @@ elif selected == "Data Overview":
         # Display expenses
         st.header("Expenses")
 
-        value_column, category_column, description_column, date_column,expense_delete_column = st.columns(5)
+        (
+            value_column,
+            category_column,
+            description_column,
+            date_column,
+            expense_delete_column,
+        ) = st.columns(5)
         value_column.write("**Value**")
         category_column.write("**Category**")
         description_column.write("**Description**")
@@ -152,7 +180,9 @@ elif selected == "Data Overview":
 
 elif selected == "Data Visualization":
     # Create a list of expenses and their values
-    expense_data = [(expense.category, expense.value) for expense in expense_tracker.expense_list]
+    expense_data = [
+        (expense.category, expense.value) for expense in expense_tracker.expense_list
+    ]
     if expense_data:
         # Calculate the percentage of expenses for the pie chart
         expenses = [data[0] for data in expense_data]
@@ -161,14 +191,22 @@ elif selected == "Data Visualization":
         percentages = [(value / total) * 100 for value in values]
 
         # Create a smaller pie chart with a transparent background
-        fig, ax = plt.subplots(figsize=(3,3), dpi=300)
-        ax.pie(percentages, labels=expenses, autopct="%1.1f%%", startangle=140, textprops={'fontsize': 6, 'color': 'white'})
-        ax.set_title("Expense Distribution", fontsize=12, color='white')
+        fig, ax = plt.subplots(figsize=(3, 3), dpi=300)
+        ax.pie(
+            percentages,
+            labels=expenses,
+            autopct="%1.1f%%",
+            startangle=140,
+            textprops={"fontsize": 6, "color": "white"},
+        )
+        ax.set_title("Expense Distribution", fontsize=12, color="white")
 
         # Set the background color to be transparent
-        fig.patch.set_facecolor('none')
+        fig.patch.set_facecolor("none")
 
         # Display the pie chart in Streamlit
         st.pyplot(fig)
     else:
-        st.info("Start by adding family members to track your expenses together! Currently, no members have been added. Get started by clicking the 'Add Member' from the Data Entry Tab.")
+        st.info(
+            "Start by adding family members to track your expenses together! Currently, no members have been added. Get started by clicking the 'Add Member' from the Data Entry Tab."
+        )
