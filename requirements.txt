@@ -1,5 +1,6 @@
 altair==5.1.2
 attrs==23.1.0
+bcrypt==4.0.1
 blinker==1.6.3
 cachetools==5.3.1
 certifi==2023.7.22
@@ -25,6 +26,7 @@ numpy==1.26.0
 packaging==23.2
 pandas==2.1.1
 Pillow==10.0.1
+plotly==5.17.0
 protobuf==4.24.4
 pyarrow==13.0.0
 pydeck==0.8.1b0
@@ -39,6 +41,7 @@ rpds-py==0.10.6
 six==1.16.0
 smmap==5.0.1
 streamlit==1.27.2
+streamlit-option-menu==0.3.6
 tenacity==8.2.3
 toml==0.10.2
 toolz==0.12.0
