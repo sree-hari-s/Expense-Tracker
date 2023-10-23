@@ -2,6 +2,8 @@ import streamlit as st
 from main import FamilyExpenseTracker
 import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
+import plotly.graph_objects as go
+
 
 # Streamlit configuration
 st.set_page_config(page_title="Family Expense Tracker", page_icon="💰")
@@ -206,6 +208,31 @@ elif selected == "Data Visualization":
 
         # Display the pie chart in Streamlit
         st.pyplot(fig)
+
+        # Create a Sankey chart
+        fig = go.Figure(go.Sankey(
+            node=dict(
+                pad=15,
+                thickness=20,
+                line=dict(color="black", width=0.5),
+                label=expenses,  # Replace with your data
+            ),
+            link=dict(
+                source=[0, 0, 1, 1, 2],  # Replace with your source and target nodes
+                target=[2, 3, 3, 4, 4],
+                value=[30, 20, 10, 15, 5],  # Replace with your flow values
+            )
+        ))
+
+        # Customize the layout
+        fig.update_layout(
+            font_size=10,
+            title="Expense Flow Sankey Chart",
+            title_x=0.5,
+        )
+
+        # Display the Sankey chart in Streamlit
+        st.plotly_chart(fig)
     else:
         st.info(
             "Start by adding family members to track your expenses together! Currently, no members have been added. Get started by clicking the 'Add Member' from the Data Entry Tab."
