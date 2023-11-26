@@ -2,34 +2,18 @@ import streamlit as st
 from main import FamilyExpenseTracker
 import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
+from pathlib import Path
 
 # Streamlit configuration
-
 st.set_page_config(page_title="Family Expense Tracker", page_icon="💰")
 st.title("")  # Clear the default title
 
-# Hide Streamlit Style
-hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
-pg_bg= """
-<style>
-[data-testid="stAppViewContainer"]{
-background-color: #444cf755;
-opacity: 0.8;
-background-image: repeating-radial-gradient( circle at 0 0, transparent 0, #000000 10px ), repeating-linear-gradient( #00000055, #000000 );
+# Path Settings
+current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+css_file = current_dir / "styles" / "main.css"
 
- 
-
-}
-
-</style>"""
-st.markdown(pg_bg,unsafe_allow_html=True)
+with open(css_file) as f:
+    st.markdown("<style>{}</style>".format(f.read()), unsafe_allow_html=True)
 
 # Create a session state object
 session_state = st.session_state
