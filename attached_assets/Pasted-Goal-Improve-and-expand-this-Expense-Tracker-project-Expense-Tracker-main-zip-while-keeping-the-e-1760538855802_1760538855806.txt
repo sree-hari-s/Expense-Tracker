@@ -1,0 +1,89 @@
+Goal: Improve and expand this Expense Tracker project (Expense-Tracker-main.zip) while keeping the existing languages, frameworks, and tools. You may add supporting libraries or minor new tools for enhancements, but do not change the main stack.
+
+Existing setup: Expense tracker app (languages and tools already used inside the zip — keep them the same).
+
+🔧 Improvements & Features to Implement:
+
+Login Page for Family Members
+
+Add a login/registration page for family members.
+
+Each login should automatically associate all transactions with that family member’s name.
+
+Include an optional income input field during login (not mandatory).
+
+Store the family member’s name and income for use in other sections (like budget and visualization).
+
+Budget Bar
+
+Display a total family income vs total amount spent bar (progress-style).
+
+Auto-updates dynamically as expenses are added or modified.
+
+Visually appealing and color-coded (e.g., green → under budget, red → exceeded).
+
+Add Expense Tab
+
+Keep the existing add expense functionality.
+
+Slightly refine UI (align input fields, adjust spacing, add icons if possible).
+
+Ensure expenses are tagged with the logged-in family member’s name.
+
+Transaction Page / Tab
+
+Add Edit and Delete options for each transaction.
+
+Update the display table dynamically after edits or deletions.
+
+Include filters (e.g., by member, category, or date).
+
+Visualization Tab
+
+New section for data visualization:
+
+Pie Chart: Category-wise expense distribution.
+
+Cluster Bar Chart: Compare each family member’s income vs total expenses.
+
+Charts should be interactive and clean (you may use Chart.js, Plotly, or any compatible chart library).
+
+Export Tab
+
+New section to export reports:
+
+Export to CSV or PDF format.
+
+Include:
+
+Transactions with member names.
+
+All visualizations (pie & bar charts).
+
+Summary (total income, total spent, remaining).
+
+Add download buttons for both file types.
+
+UI / UX Enhancements
+
+Make the app look classy and modern (consistent color theme, spacing, and typography).
+
+Use a clean layout and soft animations.
+
+Ensure responsiveness across devices.
+
+⚙️ Constraints:
+
+Keep the same core languages, framework, and structure as used in the project.
+
+You may add supporting libraries (e.g., for charts, export, or authentication).
+
+Do not rewrite the whole project; build on top of it.
+
+🪄 Deliverables:
+
+Fully working updated project.
+
+Clean and modular code with comments.
+
+Updated README.md documenting new features and setup steps.
