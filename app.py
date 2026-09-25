@@ -46,17 +46,17 @@ expense_tracker = session_state.expense_tracker
 
 if selected == "Data Entry":
     st.header("Add Family Member")
-    with st.expander("Add Family Member"):
-        # Sidebar for adding family members
-        member_name = st.text_input("Name").title()
-        earning_status = st.checkbox("Earning Status")
-        if earning_status:
-            earnings = st.number_input("Earnings", value=1, min_value=1)
-        else:
-            earnings = 0
-
-        if st.button("Add Member"):
-            try:
+    with st.form("member_form", clear_on_submit=True):
+            member_name = st.text_input("Name").title()
+            earning_status = st.checkbox("Earning Status")
+            if earning_status:
+                earnings = st.number_input("Earnings", value=1, min_value=1)
+            else:
+                earnings = 0
+            
+            submitted = st.form_submit_button("Add Member")
+            if submitted:
+             try:
                 # Check if family member exists
                 member = [
                     member
@@ -75,13 +75,13 @@ if selected == "Data Entry":
                         member[0], earning_status, earnings
                     )
                     st.success("Member updated successfully!")
-            except ValueError as e:
+             except ValueError as e:
                 st.error(str(e))
 
     # Sidebar for adding expenses
     st.header("Add Expenses")
-    with st.expander("Add Expenses"):
-        expense_category = st.selectbox(
+    with st.form("expense_form",clear_on_submit=True):
+         expense_category = st.selectbox(
             "Category",
             (
                 "Housing",
@@ -93,12 +93,13 @@ if selected == "Data Entry":
                 "Investment",
                 "Miscellaneous",
             ),
-        )
-        expense_description = st.text_input("Description (optional)").title()
-        expense_value = st.number_input("Value", min_value=0)
-        expense_date = st.date_input("Date", value="today")
-
-        if st.button("Add Expense"):
+        )  
+         expense_description = st.text_input("Description (optional)").title()
+         expense_value = st.number_input("Value", min_value=0)
+         expense_date = st.date_input("Date", value="today")
+         submitted_expense = st.form_submit_button("Add Expense")
+         if submitted_expense:
+        
             try:
                 # Add the expense
                 expense_tracker.merge_similar_category(
